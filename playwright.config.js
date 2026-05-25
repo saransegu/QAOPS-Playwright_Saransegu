@@ -1,7 +1,13 @@
 // @ts-check
 import { defineConfig, devices } from '@playwright/test';
 
-
+// playwright.config.js
+module.exports = {
+  use: {
+    // Runs headless in CI, but allows headed locally if you override it
+    headless: process.env.CI ? true : false,
+  },
+};
 
 /**
  * @see https://playwright.dev/docs/test-configuration
