@@ -31,9 +31,15 @@ test('@Web Client App login', async ({ page }) => {
    await page.locator("div li").first().waitFor(); 
    
    // Assert that the first item in the cart matches our product name
+   const rawId = await page.locator("div li p").first().textContent();
+   console.log("Raw Product ID Text:", rawId); // Debugging output
+   const productId = rawId.trim();
    await expect(page.locator("div li h3").first()).toHaveText(productName);
    
    // Dynamic check if you want to ensure it exists anywhere in the list:
    const cartList = page.locator("div li h3");
    await expect(cartList).toContainText([productName]);
+
+
+//proceed for the payment
 });
