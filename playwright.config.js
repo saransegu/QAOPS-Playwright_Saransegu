@@ -1,37 +1,51 @@
 // @ts-check
-import { defineConfig, devices } from '@playwright/test';
+const { devices } = require('@playwright/test');
 
-// playwright.config.js
-module.exports = {
-  use: {
-    // Runs headless in CI, but allows headed locally if you override it
-    headless: process.env.CI ? true : false,
-  },
-};
-
-/**
- * @see https://playwright.dev/docs/test-configuration
- */
-export default defineConfig({
+const config = {
   testDir: './tests',
-  /* Run tests in files in parallel */
-  fullyParallel: false,
+  retries :1,
+  workers: 3,
+  /* Maximum time one test can run for. */
+  //10-
+  timeout: 30 * 1000,
+  expect: {
+  
+    timeout: 5000
+  },
   
   reporter: 'html',
-  
-  use: {
-    
-    trace: 'on-first-retry',
-  },
-
-  /* Configure projects for major browsers */
-  projects: [
+  projects : [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'], headless: false },
+      name : 'safari',
+      use: {
+
+        browserName : 'webkit',
+        headless : true,
+        screenshot : 'off',
+        trace : 'on',//off,on 
+        ...devices['iPhone 11'],    
+      }
+
     },
-  ],
+    {
+      name : 'chrome',
+      use: {
 
+        browserName : 'chromium',
+        headless : false,
+        screenshot : 'on',
+        video: 'retain-on-failure',
+        ignoreHttpsErrors:true,
+        permissions:['geolocation'],
+        
+        trace : 'on',//off,on
+       // ...devices['']
+       viewport : {width:1000,height:1000}
+         }
 
-});
+    }
+    ]
 
+};
+
+module.exports = config;
