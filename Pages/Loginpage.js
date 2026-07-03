@@ -10,7 +10,7 @@ class LoginPage {
         await this.page.goto("https://rahulshettyacademy.com/client");
     }
 
-    // Fixed: Destructure the email object to match how you call it in the test
+
     async ValidLogin( email, password) {
         await this.email.fill(email);
         await this.password.fill(password);

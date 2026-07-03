@@ -1,8 +1,9 @@
 const { test, expect } = require('@playwright/test');
 const { LoginPage } = require('../Pages/Loginpage.js');
 const { Dashboard }=require('../Pages/Dashboard.js');
+const { loginpagetest } = require('../Fixtures/LoginPageFixture.js');
  
-test('@Web Client App login', async ({ page }) => {
+loginpagetest('@Web Client App login', async ({ login }) => {
    const email = "samsinghroy@gmail.com";
    const productName = 'ZARA COAT 3';
   
