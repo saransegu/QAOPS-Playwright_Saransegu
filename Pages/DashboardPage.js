@@ -5,8 +5,10 @@ constructor(page)
     this.page = page;
     this.products = page.locator(".card-body");
     this.productsText = page.locator(".card-body b");
-    this.cart =  page.locator("[routerlink*='cart']");
+    this.cart =  page.locator("button[routerlink*='cart']").nth(0);
     this.orders = page.locator("button[routerlink*='myorders']");
+    this.cartitem = page.locator(".infoWrap");
+    this.checkoutButton = page.locator("text=Checkout");
 
 }
 
@@ -36,7 +38,11 @@ async navigateToOrders()
 async navigateToCart()
 {
     await this.cart.click();
-}
+    await this.cartitem.waitFor({ state: 'visible' });
 
+}
+async checkout() {
+    await this.checkoutButton.click();
+}
 }
 module.exports = {DashboardPage};

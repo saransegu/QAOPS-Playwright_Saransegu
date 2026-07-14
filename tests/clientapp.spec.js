@@ -1,9 +1,9 @@
 const { test, expect } = require('@playwright/test');
 const { LoginPage } = require('../Pages/Loginpage.js');
-const { Dashboard }=require('../Pages/Dashboard.js');
+const { DashboardPage } = require('../Pages/DashboardPage.js');
 const { loginpagetest } = require('../Fixtures/LoginPageFixture.js');
  
-loginpagetest('@Web Client App login', async ({ login }) => {
+test.only('@Web Client App login', async ({page }) => {
    const email = "samsinghroy@gmail.com";
    const productName = 'ZARA COAT 3';
   
@@ -11,18 +11,15 @@ loginpagetest('@Web Client App login', async ({ login }) => {
    await Login.navigate();
    await Login.ValidLogin(email,"Saran23@");
    
-   // Wait for the elements to load completely
-   const Dashboard=new Dashboard(page);
-   await Dashboard.searchProductAddCart(productName);
-   await Dashboard.navigateToOrders();
-   await Dashboard.navigateToCart()
-   await page.locator(".card-body b").first().waitFor();
-   const titles = await page.locator(".card-body b").allTextContents();
-   const titlecount = titles.length;
-   console.log("Available Products:", titles); 
+
+  const dashboard = new DashboardPage(page);
+  await dashboard.searchProductAddCart(productName);
+  await dashboard.navigateToOrders();
+  await dashboard.navigateToCart();
+  await dashboard.checkout();
 
 
-  // FIX: Replace networkidle with an explicit locator wait
+
   const countryInput = page.getByPlaceholder('Select Country');
   await countryInput.waitFor({ state: 'visible' });
 
